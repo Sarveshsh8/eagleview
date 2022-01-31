@@ -1,28 +1,51 @@
+YOLO v5 Model Architecture
+As YOLO v5 is a single-stage object detector, it has three important parts like any other single-stage object detector.
 
-YOLO – YOU ONLY LOOK ONCE YOLO came on the computer vision scene with a paper released in 2015 by Joseph Redmon et al. “You Only Look Once: Unified, Real-Time Object Detection,”
-and immediately got a lot of attention from fellow computer vision researchers. Convolutional Neural Networks (CNN) such as RegionConvolutional Network (R-CNN) used Regions 
-Proposal Networks (RPNs) before YOLO was invented, it produces proposal bounding boxes on the input image first, then runs a classifier on the bounding boxes and then apply 
-post-processing to remove duplicate detections and refine the bounding boxes. It was not suitable for training individual stages of the R-CNN network separately. The R-CNN 
-network was both difficult and sluggish to optimize. The author's motivation is to build a unified model of all phases on a neural network. With the input image containing 
-(or not) the objects, after passing forward through a single neural network of multiple convolutional networks, the system produces predictive vectors corresponding to each 
-object appearing in the image. Instead of iterating the process of classifying different regions on the image, the YOLO system computes all the features of the image and makes 
-predictions for all objects at the same time. That is the idea of "You Only Look Once". (Redmon, et al., 2016)
+Model Backbone
+Model Neck
+Model Head
+Model Backbone is mainly used to extract important features from the given input image. In YOLO v5 the CSP — Cross Stage Partial Networks are used as a backbone to extract rich in informative features from an input image.
 
-Overview of YOLOv5 Besides, Glenn Jocher is also the inventor of the Mosaic data augmentation and acknowledged by Alexey Bochkovsky in the YOLOv4 paper (Bochkovskiy, et al., 2020).
-However, his YOLOv5 model caused lots of controversy in the computer vision community because of its name and improvements. Despite being released a month after YOLOv4, the start 
-of research for YOLOv4 and YOLOv5 was quite close (March – April 2020). For avoiding collision, Glenn decided to name his version of YOLO, YOLOv5. Thus, basically, both researchers
-applied the state-of-the-art innovations in the field of computer vision at that time. That makes the architecture of YOLOv4 and YOLOv5 very similar and it makes many people 
-dissatisfied with the name YOLOv5 (5th generation of YOLO) when it does not contain multiple outstanding improvements compared to the previous version YOLOv4. Besides, Glenn 
-did not publish any paper for YOLOv5, causing more suspicions about YOLOv5. However, YOLOv5 possessed the advantages in engineering. YOLOv5 is written in Python programming 
-language instead of C as in previous versions. That makes installation and integration on IoT devices easier. In addition, the PyTorch community is also larger than the Darknet 
-community, which means that PyTorch will receive more contributions and growth potential in the future. Due to being written in 2 different languages on 2 different frameworks, 
-comparing the performance between YOLOv4 and YOLOv5 is difficult to be accurate. But after a while, YOLOv5 37 has proved higher performance than YOLOv4 under certain circumstances
-and partly gained confidence in the computer vision community besides YOLOv4. 4.2 Notable differences – Adaptive anchor boxes As mentioned above, the YOLOv5 architecture has 
-integrated the latest innovations similar to the YOLOv4 architecture, thus there are not many brilliant differences in theory. The author did not publish a detailed paper, but 
-only launched a repository on Github and updates improvements there. By dissecting its structure code in file .yaml, the YOLOv5 model can be summarized as follows 
-(Jocher, 2020):
+CSPNet has shown significant improvement in processing time with deeper networks. Refer to the following image, for more information about CSPNet visit the Github repo.
 
-Backbone: Focus structure, CSP network - Neck: SPP block, PANet - Head: YOLOv3 head using GIoU-loss The remarkable point mentioned by the YOLOv5 author is an engineering difference. Joseph Redmon introduced the anchor box structure in YOLOv2 and a procedure for selecting anchor boxes of size and shape that closely resemble the ground truth bounding boxes in the training set. By using the k-mean clustering algorithm with different 𝑘 values, the authors picked the 5 best-fit anchor boxes for the COCO dataset (containing 80 classes) and use them as the default. That reduces training time and increases the accuracy of the network. However, when applying these 5 anchor boxes to a unique dataset (containing a class not belonged to 80 classes in the COCO dataset), these anchor boxes cannot quickly adapt to the ground truth bounding boxes of this unique dataset. For example, a giraffe dataset prefers the anchor boxes with the shape thin and higher than a square box. To address this problem, computer vision engineers usually run the k-mean clustering algorithm on the unique dataset to get the best-fit anchor boxes for the data first. Then, these parameters will be configurated manually in the YOLO architecture. Glenn Jocher proposed integrating the anchor box selection process into YOLOv5. As a result, the network has not to consider any of the datasets to be used as input, it will automatically "learning" the best anchor boxes for that dataset and use them during training. (Solawetz, 2020).
+
+Source: https://github.com/WongKinYiu/CrossStagePartialNetworks/blob/master/fig/cmp3.png
+Model Neck is mainly used to generate feature pyramids. Feature pyramids help models to generalized well on object scaling. It helps to identify the same object with different sizes and scales.
+
+Feature pyramids are very useful and help models to perform well on unseen data. There are other models that use different types of feature pyramid techniques like FPN, BiFPN, PANet, etc.
+
+In YOLO v5 PANet is used for as neck to get feature pyramids. For more information on features pyramids, refer to the following link.
+
+Understanding Feature Pyramid Networks for object detection (FPN)
+
+The model Head is mainly used to perform the final detection part. It applied anchor boxes on features and generates final output vectors with class probabilities, objectness scores, and bounding boxes.
+
+In YOLO v5 model head is the same as the previous YOLO V3 and V4 versions.
+
+Additionally, I am attaching the final model architecture for YOLO v5 — a small version.
+
+Activation Function
+The choice of activation functions is most crucial in any deep neural network. Recently lots of activation functions have been introduced like Leaky ReLU, mish, swish, etc.
+
+YOLO v5 authors decided to go with the Leaky ReLU and Sigmoid activation function.
+
+In YOLO v5 the Leaky ReLU activation function is used in middle/hidden layers and the sigmoid activation function is used in the final detection layer. You can verify it here.
+
+Optimization Function
+For optimization function in YOLO v5, we have two options
+
+SGD
+Adam
+In YOLO v5, the default optimization function for training is SGD.
+
+However, you can change it to Adam by using the “ — — adam” command-line argument.
+
+Cost Function or Loss Function
+In the YOLO family, there is a compound loss is calculated based on objectness score, class probability score, and bounding box regression score.
+
+Ultralytics have used Binary Cross-Entropy with Logits Loss function from PyTorch for loss calculation of class probability and object score.
+
+We also have an option to choose the Focal Loss function to calculate the loss. You can choose to train with Focal Loss by using fl_gamma hyper-parameter
 Solution
 
 Convert the json format dataset into yolo format using #links
