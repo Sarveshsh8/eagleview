@@ -1,5 +1,4 @@
-# eagleview
-eagleview
+
 YOLO – YOU ONLY LOOK ONCE YOLO came on the computer vision scene with a paper released in 2015 by Joseph Redmon et al. “You Only Look Once: Unified, Real-Time Object Detection,”
 and immediately got a lot of attention from fellow computer vision researchers. Convolutional Neural Networks (CNN) such as RegionConvolutional Network (R-CNN) used Regions 
 Proposal Networks (RPNs) before YOLO was invented, it produces proposal bounding boxes on the input image first, then runs a classifier on the bounding boxes and then apply 
