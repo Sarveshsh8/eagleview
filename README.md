@@ -47,4 +47,4 @@ METRICS
 1. To achieve a good accuracy, we need a dataset >2-3k images
 2. Good accuracy can also be achieved on a smaller dataset considering the annotation / labelling of images is correctly done.
 3. Tweaking images size can also attain good accuracy 
-4. Training it for more thamn 1000 epochs might also help in achieving good model
+4. Training it for more than 1000 epochs might also help in achieving good model
