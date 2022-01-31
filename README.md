@@ -34,3 +34,17 @@ Go to yolov5/data/ Open coco128.yaml
 Edit the following inside it: Training and Test file path Number of classes and Class names.
 
 Train it using - !python train.py --img 416 --batch 8 --epochs 10 --data coco128.yaml --weights yolov5s.pt --nosave --cache
+
+
+METRICS
+            Class     Images     Labels    Precision  Recall     mAP@.5 mAP@.5:.95: 100% 5/5 [00:04<00:00,  1.17it/s]
+            all        144        975      0.283      0.233      0.193     0.0755
+            person     144        596      0.219      0.178      0.121      0.035
+            car        144        379      0.347      0.288      0.265      0.116
+            
+  RECOMMENDATION
+  
+1. To achieve a good accuracy, we need a dataset >2-3k images
+2. Good accuracy can also be achieved on a smaller dataset considering the annotation / labelling of images is correctly done.
+3. Tweaking images size can also attain good accuracy 
+4. Training it for more thamn 1000 epochs might also help in achieving good model
