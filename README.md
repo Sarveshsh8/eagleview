@@ -60,10 +60,10 @@ Train it using - !python train.py --img 416 --batch 8 --epochs 10 --data coco128
 
 
 METRICS
-            Class     Images     Labels    Precision  Recall     mAP@.5 mAP@.5:.95: 100% 5/5 [00:04<00:00,  1.17it/s]
-            all        144        975      0.283      0.233      0.193     0.0755
-            person     144        596      0.219      0.178      0.121      0.035
-            car        144        379      0.347      0.288      0.265      0.116
+       Class     Images     Labels    Precision  Recall     mAP@.5 mAP@.5:.95: 100% 5/5 [00:04<00:00,  1.17it/s]
+         all        144        975      0.283      0.233      0.193     0.0755
+         person     144        596      0.219      0.178      0.121      0.035
+         car        144        379      0.347      0.288      0.265      0.116
             
   RECOMMENDATION
   
