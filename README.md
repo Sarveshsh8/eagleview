@@ -1,4 +1,8 @@
+
 YOLO v5 Model Architecture
+
+Dataset - https://drive.google.com/drive/folders/1RdayJBDr0I7P2lr9N_D4bziz2LIrhG7F?usp=sharing
+
 As YOLO v5 is a single-stage object detector, it has three important parts like any other single-stage object detector.
 
 Model Backbone
@@ -47,6 +51,7 @@ Ultralytics have used Binary Cross-Entropy with Logits Loss function from PyTorc
 
 We also have an option to choose the Focal Loss function to calculate the loss. You can choose to train with Focal Loss by using fl_gamma hyper-parameter
 Solution
+
 
 Convert the json format dataset into yolo format using #links
 Split the dataset i.e train/val
